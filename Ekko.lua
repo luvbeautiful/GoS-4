@@ -54,7 +54,7 @@ if GoS:ValidTarget(unit, 1200) then
               local ult = (GetCastLevel(myHero,_R)*150+50)+(GetBonusAP(myHero)*1.30)
                       local EPred = GetPredictionForPlayer(GoS:myHeroPos(),unit,GetMoveSpeed(unit),1700,250,325,50,false,true)
                          if CanUseSpell(myHero, _R) and GoS:GetDistance(unit, 325) then 
-            if CalcDamage(myHero, unit, ult) > GetCurrentHP(unit) then
+            if GoS:CalcDamage(myHero, unit, ult) > GetCurrentHP(unit) then
             CastSkillShot(_R,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z) 
               end
             end
