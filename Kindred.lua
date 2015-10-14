@@ -3,17 +3,20 @@ if GetObjectName(myHero) ~= "Kindred" then return end
 KindredM = Menu("Kindred", "Kindred")
 KindredM:SubMenu("Combo", "Combo")
 KindredM.Combo:Boolean("Q", "Use Q", true)
+KindredM.Combo:Boolean("QM", "Use Q to mouse", true)
 KindredM.Combo:Boolean("W", "Use W", true)
 KindredM.Combo:Boolean("E", "Use E", true)
 KindredM.Combo:Boolean("R", "Use R", true)
 
 KindredM:SubMenu("JungleClear", "JungleClear")
 KindredM.JungleClear:Boolean("Q", "Use Q", true)
+KindredM.JungleClear:Boolean("QM", "Use Q to mouse", true)
 KindredM.JungleClear:Boolean("W", "Use W", true)
 KindredM.JungleClear:Boolean("E", "Use E", true)
 
 KindredM:SubMenu("LaneClear", "LaneClear")
 KindredM.LaneClear:Boolean("Q", "Use Q", false)
+KindredM.LaneClear:Boolean("QM", "Use Q to mouse", false)
 KindredM.LaneClear:Boolean("E", "Use E", false)
 KindredM:SubMenu("Drawings", "Drawings")
 
@@ -49,6 +52,9 @@ OnLoop(function(myHero)
 			if GetCastName(myHero, _Q) == "KindredQ" then
 				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1700,250,750,50,false,true)
 				if KindredM.Combo.Q:Value() then
+					if KindredM.Combo.QM:Value() then
+						QPred.PredPos=GetMousePos()
+					end
 					if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 then
 						CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 					end
@@ -78,12 +84,15 @@ OnLoop(function(myHero)
 		
 		
 			if CanUseSpell(myHero, _W) == READY and KindredM.JungleClear.W:Value() and GoS:ValidTarget(mob, 450) then
-				mobPos=GetOrigin(mob)
+				local mobPos=GetOrigin(mob)
 				CastSpell(_W)
 			end
 			
 			if CanUseSpell(myHero, _Q) == READY and KindredM.JungleClear.Q:Value() and GoS:ValidTarget(mob, 450) then
-				mobPos=GetOrigin(mob)
+				local mobPos=GetOrigin(mob)
+				if KindredM.JungleClear.QM:Value() then
+					mobPos=GetMousePos()
+				end
 				CastSkillShot(_Q,mobPos.x,mobPos.y,mobPos.z)
 			end
 			
@@ -103,7 +112,10 @@ OnLoop(function(myHero)
 
 		for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 			if CanUseSpell(myHero, _Q) == READY and KindredM.LaneClear.Q:Value() and GoS:ValidTarget(minion, 450) then
-				minionPos=GetOrigin(minion)
+				local minionPos=GetOrigin(minion)
+				if KindredM.LaneClear.Q:Value() then
+					minionPos=GetMousePos()
+				end
 				CastSkillShot(_Q,minionPos.x,minionPos.y,minionPos.z)
 			end
 			
