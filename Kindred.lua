@@ -13,8 +13,8 @@ KindredM.JungleClear:Boolean("W", "Use W", true)
 KindredM.JungleClear:Boolean("E", "Use E", true)
 
 KindredM:SubMenu("LaneClear", "LaneClear")
-KindredM.LaneClear:Boolean("Q", "Use Q", true)
-KindredM.LaneClear:Boolean("E", "Use E", true)
+KindredM.LaneClear:Boolean("Q", "Use Q", false)
+KindredM.LaneClear:Boolean("E", "Use E", false)
 KindredM:SubMenu("Drawings", "Drawings")
 
 KindredM.Drawings:Boolean("Q", "Draw Q Range", true)
@@ -22,8 +22,6 @@ KindredM.Drawings:Boolean("Q", "Draw Q Range", true)
 KindredM:SubMenu("Misc", "Misc")
 KindredM.Misc:Boolean("Autolvl", "Auto level", true)
 KindredM.Misc:Boolean("AR", "Auto R", false)
-
--- I fix the errors like this I follow the red thingy, and in the end, here.
 
 OnLoop(function(myHero)
    local target = GetCurrentTarget()
