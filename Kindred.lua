@@ -9,10 +9,10 @@ KindredM.Combo:Boolean("E", "Use E", true)
 KindredM.Combo:Boolean("R", "Use R", true)
 
 KindredM:SubMenu("JungleClear", "JungleClear")
-KindredM.JungleClear:Boolean("Q", "Use Q", true)
-KindredM.JungleClear:Boolean("QM", "Use Q to mouse", true)
-KindredM.JungleClear:Boolean("W", "Use W", true)
-KindredM.JungleClear:Boolean("E", "Use E", true)
+KindredM.JungleClear:Boolean("Q", "Use Q", false)
+KindredM.JungleClear:Boolean("QM", "Use Q to mouse", falses)
+KindredM.JungleClear:Boolean("W", "Use W", false)
+KindredM.JungleClear:Boolean("E", "Use E", false)
 
 KindredM:SubMenu("LaneClear", "LaneClear")
 KindredM.LaneClear:Boolean("Q", "Use Q", false)
@@ -23,8 +23,9 @@ KindredM:SubMenu("Drawings", "Drawings")
 KindredM.Drawings:Boolean("Q", "Draw Q Range", true)
 
 KindredM:SubMenu("Misc", "Misc")
-KindredM.Misc:Boolean("Autolvl", "Auto level", true)
+KindredM.Misc:Boolean("Autolvl", "Auto level", false)
 KindredM.Misc:Boolean("AR", "Auto R", false)
+KindredM.Misc:Key("Flee", "Flee with Q to mouse", string.byte("G"))
 
 OnLoop(function(myHero)
    local target = GetCurrentTarget()
@@ -134,7 +135,13 @@ OnLoop(function(myHero)
 		DrawCircle(GoS:myHeroPos().x,GoS:myHeroPos().y,GoS:myHeroPos().z,550,1,128,0xff00ff00)
 	 end
 
+	---FLEE---
+	if CanUseSpell(myHero, _Q) == READY and KindredM.Misc.Flee:Value() then
+		local fleePos=GetMousePos()   
+		CastSkillShot(_Q,fleePos.x,fleePos.y,fleePos.z)
+	end
 
+				
 ----AUTOLVL-----
 local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, _R, _W, _W}
 	if KindredM.Misc.Autolvl:Value() then  
@@ -149,3 +156,4 @@ local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, 
 end)
 
 PrintChat("Shadowfire Kindred by Musti")
+PrintChat("Version 1.1 - Check in my GoS thread if there are any updates!")
