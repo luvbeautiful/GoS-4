@@ -34,7 +34,7 @@ OnLoop(function(myHero)
 	if KindredM.Misc.AR then
 		for _, ally in pairs(GoS:GetAllyHeroes()) do
 			if KindredM.Misc.AR:Value() then
-				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and IsObjectAlive(ally) then
+				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(ally,GetCastRange(myHero,_R)) and )IsObjectAlive(ally) then
 					CastTargetSpell(ally,_R)
 				end
 			end	
@@ -158,4 +158,4 @@ local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, 
 end)
 
 PrintChat("Shadowfire Kindred by Musti")
-PrintChat("Version 1.2 - Check in my GoS thread if there are any updates!")
+PrintChat("Version 1.3 - Check in my GoS thread if there are any updates!")
