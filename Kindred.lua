@@ -183,4 +183,4 @@ function UseItems(unit)		--Item function by Logge; some credits to Deftsu
 end
 
 PrintChat("Shadowfire Kindred by Musti")
-PrintChat("Version 1.3 - Check in my GoS thread if there are any updates!")
+PrintChat("Version 1.4 - Check in my GoS thread if there are any updates!")
