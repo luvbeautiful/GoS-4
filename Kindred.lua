@@ -23,12 +23,16 @@ KindredM:SubMenu("Drawings", "Drawings")
 KindredM.Drawings:Boolean("Q", "Draw Q Range", true)
 
 KindredM:SubMenu("Misc", "Misc")
+KindredM.Misc:Boolean("Item","Use items", true)
 KindredM.Misc:Boolean("Autolvl", "Auto level", false)
 KindredM.Misc:Boolean("AR", "Auto R", false)
 KindredM.Misc:Key("Flee", "Flee with Q to mouse", string.byte("G"))
 
 OnLoop(function(myHero)
    local target = GetCurrentTarget()
+   
+-----Call items function------
+	UseItems(target)
 -----Auto R------
 	if GoS:ValidTarget(target, 500) then
 	if KindredM.Misc.AR then
@@ -142,7 +146,6 @@ end
 		local fleePos=GetMousePos()   
 		CastSkillShot(_Q,fleePos.x,fleePos.y,fleePos.z)
 	end
-
 				
 ----AUTOLVL-----
 local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, _R, _W, _W}
@@ -156,6 +159,28 @@ local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, 
 		end
 	end
 end)
+
+meeleItems={3153,3144,3142,3143}
+--	    Botr,Bilg,Ghos,Rand
+cleanseItems={3140,3139}
+--	     Merc,QSS
+
+function UseItems(unit)		--Item function by Logge; some credits to Deftsu
+	if KindredM.Misc.Item:Value() then 
+		for _,id in pairs(cleanseItems) do
+			if GetItemSlot(myHero,id) > 0 and GotBuff(myHero, "rocketgrab2") > 0 or GotBuff(myHero, "charm") > 0 or GotBuff(myHero, "fear") > 0 or GotBuff(myHero, "flee") > 0 or GotBuff(myHero, "snare") > 0 or GotBuff(myHero, "taunt") > 0 or GotBuff(myHero, "suppression") > 0 or GotBuff(myHero, "stun") > 0 or GotBuff(myHero, "zedultexecute") > 0 or GotBuff(myHero, "summonerexhaust") > 0  then
+				CastTargetSpell(myHero, GetItemSlot(myHero,id))
+			end
+		end
+		if IOW:Mode() == "Combo" then
+			for _,id in pairs(meeleItems) do
+				if GetItemSlot(myHero,id) > 0 and GoS:ValidTarget(unit, 550) then
+				CastTargetSpell(unit, GetItemSlot(myHero,id))
+				end
+			end
+		end
+	end
+end
 
 PrintChat("Shadowfire Kindred by Musti")
 PrintChat("Version 1.3 - Check in my GoS thread if there are any updates!")
