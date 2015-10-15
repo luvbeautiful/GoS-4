@@ -38,7 +38,7 @@ OnLoop(function(myHero)
 	if KindredM.Misc.AR then
 		for _, ally in pairs(GoS:GetAllyHeroes()) do
 			if KindredM.Misc.AR:Value() then
-				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(ally,GetCastRange(myHero,_R)) and )IsObjectAlive(ally) then
+				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(ally,GetCastRange(myHero,_R)) and IsObjectAlive(ally) then
 					CastTargetSpell(ally,_R)
 				end
 			end	
