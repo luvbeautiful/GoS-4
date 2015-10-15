@@ -30,6 +30,7 @@ KindredM.Misc:Key("Flee", "Flee with Q to mouse", string.byte("G"))
 OnLoop(function(myHero)
    local target = GetCurrentTarget()
 -----Auto R------
+	if GoS:ValidTarget(target, 500) then
 	if KindredM.Misc.AR then
 		for _, ally in pairs(GoS:GetAllyHeroes()) do
 			if KindredM.Misc.AR:Value() then
@@ -39,6 +40,7 @@ OnLoop(function(myHero)
 			end	
 		end
 	end
+end
 			
 ---COMBO---
 	if IOW:Mode() == "Combo" then
@@ -156,4 +158,4 @@ local leveltable = {_W, _Q, _E, _Q, _Q, _R, _E, _E, _E, _Q, _R, _E, _Q, _W, _W, 
 end)
 
 PrintChat("Shadowfire Kindred by Musti")
-PrintChat("Version 1.1 - Check in my GoS thread if there are any updates!")
+PrintChat("Version 1.2 - Check in my GoS thread if there are any updates!")
