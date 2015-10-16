@@ -38,7 +38,7 @@ OnLoop(function(myHero)
 	if KindredM.Misc.AR then
 		for _, ally in pairs(GoS:GetAllyHeroes()) do
 			if KindredM.Misc.AR:Value() then
-				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(ally,GetCastRange(myHero,_R)) and IsObjectAlive(ally) then
+				if (GetCurrentHP(ally)/GetMaxHP(ally))<0.10 and CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(ally,GetCastRange(myHero,_R)) and )IsObjectAlive(ally) then
 					CastTargetSpell(ally,_R)
 				end
 			end	
@@ -84,31 +84,34 @@ end
 		end
 	end
 		
----JUNGLECLEAR---- Thanks Deftsu <3
+---JUNGLECLEAR----
 	if IOW:Mode() == "LaneClear" then
-			
+	
+		local highesthp=nil
+		
 		for _,mob in pairs(GoS:GetAllMinions(MINION_JUNGLE)) do
-		
-		
-			if CanUseSpell(myHero, _W) == READY and KindredM.JungleClear.W:Value() and GoS:ValidTarget(mob, 450) then
-				local mobPos=GetOrigin(mob)
-				CastSpell(_W)
+			if GoS:ValidTarget(mob,500) and GetCurrentHP(mob)>highesthp then
+				highesthp=mob
 			end
-			
-			if CanUseSpell(myHero, _Q) == READY and KindredM.JungleClear.Q:Value() and GoS:ValidTarget(mob, 450) then
-				local mobPos=GetOrigin(mob)
-				if KindredM.JungleClear.QM:Value() then
-					mobPos=GetMousePos()
-				end
-				CastSkillShot(_Q,mobPos.x,mobPos.y,mobPos.z)
-			end
-			
-			
-			if CanUseSpell(myHero, _E) == READY and KindredM.JungleClear.E:Value() and GoS:ValidTarget(mob, 450) then
-				CastTargetSpell(mob, _E)
-			end
-			
 		end
+		
+		if highesthp and CanUseSpell(myHero, _W) == READY and KindredM.JungleClear.W:Value() then
+			local mobPos=GetOrigin(highesthp)
+			CastSpell(_W)
+		end
+		
+		if highesthp and CanUseSpell(myHero, _Q) == READY and KindredM.JungleClear.Q:Value() then
+			local mobPos=GetOrigin(highesthp)
+			if KindredM.JungleClear.QM:Value() then
+				mobPos=GetMousePos()
+			end
+			CastSkillShot(_Q,mobPos.x,mobPos.y,mobPos.z)
+		end
+			
+		if highesthp and CanUseSpell(myHero, _E) == READY and KindredM.JungleClear.E:Value() then
+			CastTargetSpell(highesthp, _E)
+		end
+		
 	end
 
 
@@ -182,5 +185,5 @@ function UseItems(unit)		--Item function by Logge; some credits to Deftsu
 	end
 end
 
-PrintChat("Shadowfire Kindred by Musti & Logge")
+PrintChat("Shadowfire Kindred by Musti")
 PrintChat("Version 1.4 - Check in my GoS thread if there are any updates!")
